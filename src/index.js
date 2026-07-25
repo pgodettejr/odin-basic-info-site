@@ -1,12 +1,10 @@
-import * as krappieUI from './krappieUI.js';
-import { appState } from './projects.js';
-import { removeTask, updateTask, toggleTaskChecked, storeTask } from './tasks.js';
+#!/usr/bin/env node
+
 import { getFromStorage } from "./localStorage.js";
 import './styles.css';
 import reverbFart from './sounds/quick-fart-with-reverb.mp3';
 import Plus from './img/plus.png';
-
-// TODO: Hitting the "Enter" key on the keyboard doesn't submit & close any form it seems. Either fix here in all the button logic or in the HTML itself?
+import Rock from './img/IT_DOESN_T_MATTER.mp4';
 
 // OPTION: Could add 'document.addEventListener('DOMContentLoaded', () => { move EVERYTHING in here except imports });' to ensure they are attached correctly after DOM becomes available
 
@@ -73,6 +71,27 @@ function poopSound() {
 };
 
 poopSound();
+
+// OPTION: Possibly go with audio clip instead of the GIF. Maybe combine the audio clip with an image of The Rock
+function itDoesntMatter() {
+  const infoButton = document.querySelector(".get-info");
+
+  infoButton.addEventListener('click', function() {
+    const rockGIF = document.createElement("the-rock");
+    rockGIF.setAttribute("data-image", "rock-gif");
+
+    rockGIF.src = Rock;
+
+    // TODO: Append the mp4/GIF to the button itself
+    infoButton.appendChild(rockGIF);
+
+    // Do we need similar "play" code to the audio clip above? Or does the mp4/GIF play automatically when appended to the button?
+    if(!rockGif) return; // Stops function from running altogether
+    rockGIF.play();
+  });
+};
+
+itDoesntMatter();
 
 // Search bar DOM
 const searchBar = document.getElementById("search-text");
