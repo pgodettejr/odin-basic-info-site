@@ -1,26 +1,27 @@
 {
-  "name": "krappie-todo-list",
+  "name": "odin-basic-info-site",
   "version": "1.0.0",
-  "description": "My krappie to-do list for The Odin Project :)",
+  "description": "A basic informational website for learning NodeJS backend development",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
-    "start": "webpack serve --open",
-    "build": "webpack",
+    "test": "node --test",
+    "watch": "node --watch",
+    "start": "node index.js",
+    "build": "node",
     "dist-push": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pgodettejr/krappie-todo-list.git"
+    "url": "git+https://github.com/pgodettejr/odin-basic-info-site.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pgodettejr/krappie-todo-list/issues"
+    "url": "https://github.com/pgodettejr/odin-basic-info-site/issues"
   },
-  "homepage": "https://github.com/pgodettejr/krappie-todo-list#readme",
+  "homepage": "https://github.com/pgodettejr/odin-basic-info-site#readme",
   "devDependencies": {
     "@eslint/js": "^9.9.1",
     "css-loader": "^7.1.1",
