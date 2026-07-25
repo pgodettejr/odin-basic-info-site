@@ -5,13 +5,15 @@ import './styles.css';
 import reverbFart from './sounds/quick-fart-with-reverb.mp3';
 import Plus from './img/plus.png';
 import Rock from './img/IT_DOESN_T_MATTER.mp4';
-// import { Writable } from 'node:stream';
-// import { Pool, stream } from 'undici';
-// import fs from 'node:fs';
-// import fs from 'node:fs/promises';
-// import { pipeline } from 'node:stream/promises';
-// import path from 'path';
-// import eventEmitter from 'node:events';
+
+// Getting Started with Node.js imports
+import { Writable } from 'node:stream';
+import { Pool, stream } from 'undici';
+import fs from 'node:fs';
+import fs from 'node:fs/promises';
+import { pipeline } from 'node:stream/promises';
+import path from 'path';
+import eventEmitter from 'node:events';
 
 // Secret easter egg. Click is enabled, but how can we also enable other interactions for accessibility like 'keydown', etc.?
 function poopSound() {
@@ -61,6 +63,284 @@ function itDoesNotMatter() {
 };
 
 itDoesNotMatter();
+
+
+// Getting Started with Node.js code examples from https://nodejs.org/en/docs/guides/getting-started-guide/
+
+const eventEmitter = new EventEmitter();
+
+eventEmitter.on('start', () => {
+  console.log('started');
+});
+
+eventEmitter.emit('start');
+
+eventEmitter.on('start', number => {
+  console.log(`started ${number}`);
+});
+
+eventEmitter.emit('start', 23);
+
+eventEmitter.on('start', (start, end) => {
+  console.log(`started from ${start} to ${end}`);
+});
+
+eventEmitter.emit('start', 1, 100);
+
+// Streams is a Node.js feature that allows you to read and write chunks of data. This is how to do a streaming response with Undici. See Writable and stream imports above.
+async function fetchGitHubRepos() {
+  const url = 'https://api.github.com/users/nodejs/repos';
+
+  await stream(
+    url,
+    {
+      method: 'GET',
+      headers: {
+        'User-Agent': 'undici-stream-example',
+        Accept: 'application/json',
+      },
+    },
+    res => {
+      let buffer = '';
+
+      return new Writable({
+        write(chunk, encoding, callback) {
+          buffer += chunk.toString();
+          callback();
+        },
+        final(callback) {
+          try {
+            const json = JSON.parse(buffer);
+            console.log(
+              'Repository Names:',
+              json.map(repo => repo.name)
+            );
+          } catch (error) {
+            console.error('Error parsing JSON:', error);
+          }
+          console.log('Stream processing completed.');
+          console.log(`Response status: ${res.statusCode}`);
+          callback();
+        },
+      });
+    }
+  );
+}
+
+fetchGitHubRepos().catch(console.error);
+
+// Basic GET Usage for HTTP Requests via Fetch API in Node.js using Undici
+async function main() {
+  // Like the browser fetch API, the default method is GET
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const data = await response.json();
+  console.log(data);
+  // returns something like:
+  //   {
+  //   userId: 1,
+  //   id: 1,
+  //   title: 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
+  //   body: 'quia et suscipit\n' +
+  //     'suscipit recusandae consequuntur expedita et cum\n' +
+  //     'reprehenderit molestiae ut ut quas totam\n' +
+  //     'nostrum rerum est autem sunt rem eveniet architecto'
+  // }
+}
+
+main().catch(console.error);
+
+// Basic POST Usage for HTTP Requests via Fetch API in Node.js using Undici
+
+// Data sent from the client to the server
+const body = {
+  title: 'foo',
+  body: 'bar',
+  userId: 1,
+};
+
+async function mainPost() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    headers: {
+      'User-Agent': 'undici-stream-example',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json();
+  console.log(data);
+  // returns something like:
+  // { title: 'foo', body: 'bar', userId: 1, id: 101 }
+}
+
+mainPost().catch(console.error);
+
+const content = 'Some content!';
+
+fs.writeFile('/Users/joe/test.txt', content, err => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log('File written successfully.'); 
+  }
+});
+
+//Synchronous version of writing to files in Node.js
+try {
+  fs.writeFileSync('/Users/joe/test.txt', content);
+  console.log('File written successfully.');
+} catch (err) {
+  console.error(err);
+}
+
+// Promise based method of writing to files in Node.js (see promises import above)
+// try {
+//   const content = 'Some content!';
+//   await fs.writeFile('/Users/joe/test.txt', content);
+// } catch (err) {
+//   console.log(err);
+// }
+
+// Flag that modifies the default of the API replacing the file contents
+fs.writeFile('/Users/joe/test.txt', content, { flag: 'a+' }, err => {});
+
+// How to append content to the end of a file in Node.js using const content = 'Some content!';
+fs.appendFile('/Users/joe/file.log', content, err => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log('Done!');
+  }
+});
+
+// Promises version of appending content (import fs from 'node:fs/promises';)
+// try {
+//   const content = 'Some content!';
+//   await fs.appendFile('/Users/joe/test.txt', content);
+//   console.log('Content appended successfully.');
+// } catch (err) {
+//   console.error(err);
+// }
+
+// How to read a file in Node.js using the fs module
+fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+
+// Synchronous version of reading a file in Node.js
+try {
+  const data = fs.readFileSync('/Users/joe/test.txt', 'utf8');
+  console.log(data);
+} catch (err) {
+  console.error(err);
+}
+
+// Promises version of reading files
+// try {
+//   const data = await fs.readFile('/Users/joe/test.txt', { encoding: 'utf8' });
+//   console.log(data);
+// } catch (err) {
+//   console.error(err);
+// }
+
+// Reading file content using streams. More memory efficient and best used for big files as normal, sync and promise based methods will load the entire file into memory before processing it.
+const fileUrl = 'https://www.gutenberg.org/files/2701/2701-0.txt';
+const outputFilePath = path.join(process.cwd(), 'moby.md');
+
+async function downloadFile(url, outputPath) {
+  const response = await fetch(url);
+
+  if (!response.ok || !response.body) {
+    // consuming the response body is mandatory: https://undici.nodejs.org/#/?id=garbage-collection
+    await response.body?.cancel();
+    throw new Error(`Failed to fetch ${url}. Status: ${response.status}`);
+  }
+
+  const fileStream = fs.createWriteStream(outputPath);
+  console.log(`Downloading file from ${url} to ${outputPath}`);
+
+  await pipeline(response.body, fileStream);
+  console.log('File downloaded successfully');
+}
+
+async function readLargeFile(filePath) {
+  const readStream = fs.createReadStream(filePath, { encoding: 'utf8' });
+
+  try {
+    for await (const chunk of readStream) {
+      console.log('--- File chunk start ---');
+      console.log(chunk);
+      console.log('--- File chunk end ---');
+    }
+    console.log('Finished reading the file.');
+  } catch (error) {
+    console.error(`Error reading file: ${error.message}`);
+  }
+}
+
+try {
+  await downloadFile(fileUrl, outputFilePath);
+  await readLargeFile(outputFilePath);
+} catch (error) {
+  console.error(`Error: ${error.message}`);
+}
+
+// const ollamaPool = new Pool('http://localhost:11434', {
+//   connections: 10,
+// });
+
+// /**
+//  * Stream the completeion of a prompt using the Ollama API.
+//  * @param {string} prompt - The prompt to complete.
+//  * @link https://github.com/ollama/ollama/blob/main/docs/api.md
+//  **/
+
+// async function streamOllamaCompletion(prompt) {
+//   const { statusCode, body } = await ollamaPool.request({
+//     path: 'api/generate',
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ prompt, model: 'mistral' }),
+//   });
+
+//   // You can read about HTTP status codes here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+//   // 200 means the request was successful.
+//   if (statusCode !== 200) {
+//     // consuming the response body is mandatory: https://undici.nodejs.org/#/?id=garbage-collection
+//     await body.dump();
+//     throw new Error(`Ollama request failed with status ${statusCode}`);
+//   }
+
+//   let partial = '';
+
+//   const decoder = new TextDecoder();
+//   for await (const chunk of body) {
+//     partial += decoder.decode(chunk, { stream: true });
+//     console.log(partial);
+//   }
+
+//   console.log('Streaming complete.');
+// }
+
+// try {
+//   await streamOllamaCompletion('What is recursion?');
+// } catch (error) {
+//   console.error('Error calling Ollama:', error);
+// } finally {
+//   console.log('Closing Ollama pool.');
+//   ollamaPool.close();
+// }
+
+
+// -------------------------------------------------------------
+
+// To-Do List code
 
 // OPTION: Could add 'document.addEventListener('DOMContentLoaded', () => { move EVERYTHING in here except imports });' to ensure they are attached correctly after DOM becomes available
 
