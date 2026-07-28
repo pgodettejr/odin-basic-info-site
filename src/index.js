@@ -130,9 +130,9 @@ async function fetchGitHubRepos() {
 fetchGitHubRepos().catch(console.error);
 
 // Basic GET Usage for HTTP Requests via Fetch API in Node.js using Undici
-async function main() {
+async function getIndex() {
   // Like the browser fetch API, the default method is GET
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const response = await fetch('http://localhost:8080');
   const data = await response.json();
   console.log(data);
   // returns something like:
@@ -147,7 +147,32 @@ async function main() {
   // }
 }
 
-main().catch(console.error);
+getIndex().catch(err => {
+  console.error(`Error fetching main page: ${err}`);
+  return fetch('http://localhost:8080/404');
+});
+
+async function getAbout() {
+  const response = await fetch('http://localhost:8080/about');
+  const data = await response.json();
+  console.log(data);
+}
+
+getAbout().catch(err => {
+  console.error(`Error fetching About page: ${err}`);
+  return fetch('http://localhost:8080/404');
+});
+
+async function getContact() {
+  const response = await fetch('http://localhost:8080/contact-me');
+  const data = await response.json();
+  console.log(data);
+}
+
+getContact().catch(err => {
+  console.error(`Error fetching Contact page: ${err}`);
+  return fetch('http://localhost:8080/404');
+});
 
 // Basic POST Usage for HTTP Requests via Fetch API in Node.js using Undici
 
@@ -159,7 +184,7 @@ const body = {
 };
 
 async function mainPost() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+  const response = await fetch('http://localhost:8080', {
     method: 'POST',
     headers: {
       'User-Agent': 'undici-stream-example',
