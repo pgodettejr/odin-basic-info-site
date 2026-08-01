@@ -7,6 +7,7 @@ import Plus from './img/plus.png';
 import Rock from './img/IT_DOESN_T_MATTER.mp4';
 
 // Getting Started with Node.js imports
+import { createServer } from 'node:http';
 import { Writable } from 'node:stream';
 import { Pool, stream } from 'undici';
 import fs from 'node:fs';
@@ -128,6 +129,18 @@ async function fetchGitHubRepos() {
 }
 
 fetchGitHubRepos().catch(console.error);
+
+// Create the server that listens on port 8080
+const port = 8080;
+
+const server = createServer((req, res) => {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.end('Yip Yip yipyipyipyipyipyipyip!');
+});
+
+server.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`)
+});
 
 // Basic GET Usage for HTTP Requests via Fetch API in Node.js using Undici
 async function getIndex() {
