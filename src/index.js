@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
 import { getFromStorage } from "./localStorage.js";
-import './styles.css';
+// import './styles.css';
 import reverbFart from './sounds/quick-fart-with-reverb.mp3';
 import Plus from './img/plus.png';
 import Rock from './img/IT_DOESN_T_MATTER.mp4';
 
 // Getting Started with Node.js imports
 import { createServer } from 'node:http';
-import { Writable } from 'node:stream';
-import { Pool, stream } from 'undici';
-import fs from 'node:fs';
-import fs from 'node:fs/promises';
-import { pipeline } from 'node:stream/promises';
-import path from 'path';
-import eventEmitter from 'node:events';
+// import { Writable } from 'node:stream';
+// import { Pool, stream } from 'undici';
+// import fs from 'node:fs';
+// import fs from 'node:fs/promises';
+// import { pipeline } from 'node:stream/promises';
+// import path from 'path';
+// import eventEmitter from 'node:events';
 
 // Secret easter egg. Click is enabled, but how can we also enable other interactions for accessibility like 'keydown', etc.?
 function poopSound() {
@@ -68,67 +68,67 @@ itDoesNotMatter();
 
 // Getting Started with Node.js code examples from https://nodejs.org/en/docs/guides/getting-started-guide/
 
-const eventEmitter = new EventEmitter();
+// const eventEmitter = new EventEmitter();
 
-eventEmitter.on('start', () => {
-  console.log('started');
-});
+// eventEmitter.on('start', () => {
+//   console.log('started');
+// });
 
-eventEmitter.emit('start');
+// eventEmitter.emit('start');
 
-eventEmitter.on('start', number => {
-  console.log(`started ${number}`);
-});
+// eventEmitter.on('start', number => {
+//   console.log(`started ${number}`);
+// });
 
-eventEmitter.emit('start', 23);
+// eventEmitter.emit('start', 23);
 
-eventEmitter.on('start', (start, end) => {
-  console.log(`started from ${start} to ${end}`);
-});
+// eventEmitter.on('start', (start, end) => {
+//   console.log(`started from ${start} to ${end}`);
+// });
 
-eventEmitter.emit('start', 1, 100);
+// eventEmitter.emit('start', 1, 100);
 
 // Streams is a Node.js feature that allows you to read and write chunks of data. This is how to do a streaming response with Undici. See Writable and stream imports above.
-async function fetchGitHubRepos() {
-  const url = 'https://api.github.com/users/nodejs/repos';
+// async function fetchGitHubRepos() {
+//   const url = 'https://api.github.com/users/nodejs/repos';
 
-  await stream(
-    url,
-    {
-      method: 'GET',
-      headers: {
-        'User-Agent': 'undici-stream-example',
-        Accept: 'application/json',
-      },
-    },
-    res => {
-      let buffer = '';
+//   await stream(
+//     url,
+//     {
+//       method: 'GET',
+//       headers: {
+//         'User-Agent': 'undici-stream-example',
+//         Accept: 'application/json',
+//       },
+//     },
+//     res => {
+//       let buffer = '';
 
-      return new Writable({
-        write(chunk, encoding, callback) {
-          buffer += chunk.toString();
-          callback();
-        },
-        final(callback) {
-          try {
-            const json = JSON.parse(buffer);
-            console.log(
-              'Repository Names:',
-              json.map(repo => repo.name)
-            );
-          } catch (error) {
-            console.error('Error parsing JSON:', error);
-          }
-          console.log('Stream processing completed.');
-          console.log(`Response status: ${res.statusCode}`);
-          callback();
-        },
-      });
-    }
-  );
-}
+//       return new Writable({
+//         write(chunk, encoding, callback) {
+//           buffer += chunk.toString();
+//           callback();
+//         },
+//         final(callback) {
+//           try {
+//             const json = JSON.parse(buffer);
+//             console.log(
+//               'Repository Names:',
+//               json.map(repo => repo.name)
+//             );
+//           } catch (error) {
+//             console.error('Error parsing JSON:', error);
+//           }
+//           console.log('Stream processing completed.');
+//           console.log(`Response status: ${res.statusCode}`);
+//           callback();
+//         },
+//       });
+//     }
+//   );
+// }
 
-fetchGitHubRepos().catch(console.error);
+// fetchGitHubRepos().catch(console.error);
 
 // Create the server that listens on port 8080
 const port = 8080;
@@ -190,46 +190,46 @@ getContact().catch(err => {
 // Basic POST Usage for HTTP Requests via Fetch API in Node.js using Undici
 
 // Data sent from the client to the server
-const body = {
-  title: 'foo',
-  body: 'bar',
-  userId: 1,
-};
+// const body = {
+//   title: 'foo',
+//   body: 'bar',
+//   userId: 1,
+// };
 
-async function mainPost() {
-  const response = await fetch('http://localhost:8080', {
-    method: 'POST',
-    headers: {
-      'User-Agent': 'undici-stream-example',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-  const data = await response.json();
-  console.log(data);
-  // returns something like:
-  // { title: 'foo', body: 'bar', userId: 1, id: 101 }
-}
+// async function mainPost() {
+//   const response = await fetch('http://localhost:8080', {
+//     method: 'POST',
+//     headers: {
+//       'User-Agent': 'undici-stream-example',
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(body),
+//   });
+//   const data = await response.json();
+//   console.log(data);
+//   // returns something like:
+//   // { title: 'foo', body: 'bar', userId: 1, id: 101 }
+// }
 
-mainPost().catch(console.error);
+// mainPost().catch(console.error);
 
-const content = 'Some content!';
+// const content = 'Some content!';
 
-fs.writeFile('/Users/joe/test.txt', content, err => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log('File written successfully.'); 
-  }
-});
+// fs.writeFile('/Users/joe/test.txt', content, err => {
+//   if (err) {
+//     console.error(err);
+//   } else {
+//     console.log('File written successfully.'); 
+//   }
+// });
 
-//Synchronous version of writing to files in Node.js
-try {
-  fs.writeFileSync('/Users/joe/test.txt', content);
-  console.log('File written successfully.');
-} catch (err) {
-  console.error(err);
-}
+// //Synchronous version of writing to files in Node.js
+// try {
+//   fs.writeFileSync('/Users/joe/test.txt', content);
+//   console.log('File written successfully.');
+// } catch (err) {
+//   console.error(err);
+// }
 
 // Promise based method of writing to files in Node.js (see promises import above)
 // try {
@@ -240,16 +240,16 @@ try {
 // }
 
 // Flag that modifies the default of the API replacing the file contents
-fs.writeFile('/Users/joe/test.txt', content, { flag: 'a+' }, err => {});
+// fs.writeFile('/Users/joe/test.txt', content, { flag: 'a+' }, err => {});
 
 // How to append content to the end of a file in Node.js using const content = 'Some content!';
-fs.appendFile('/Users/joe/file.log', content, err => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log('Done!');
-  }
-});
+// fs.appendFile('/Users/joe/file.log', content, err => {
+//   if (err) {
+//     console.error(err);
+//   } else {
+//     console.log('Done!');
+//   }
+// });
 
 // Promises version of appending content (import fs from 'node:fs/promises';)
 // try {
@@ -261,21 +261,21 @@ fs.appendFile('/Users/joe/file.log', content, err => {
 // }
 
 // How to read a file in Node.js using the fs module
-fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  console.log(data);
-});
+// fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+//   console.log(data);
+// });
 
 // Synchronous version of reading a file in Node.js
-try {
-  const data = fs.readFileSync('/Users/joe/test.txt', 'utf8');
-  console.log(data);
-} catch (err) {
-  console.error(err);
-}
+// try {
+//   const data = fs.readFileSync('/Users/joe/test.txt', 'utf8');
+//   console.log(data);
+// } catch (err) {
+//   console.error(err);
+// }
 
 // Promises version of reading files
 // try {
@@ -286,46 +286,46 @@ try {
 // }
 
 // Reading file content using streams. More memory efficient and best used for big files as normal, sync and promise based methods will load the entire file into memory before processing it.
-const fileUrl = 'https://www.gutenberg.org/files/2701/2701-0.txt';
-const outputFilePath = path.join(process.cwd(), 'moby.md');
+// const fileUrl = 'https://www.gutenberg.org/files/2701/2701-0.txt';
+// const outputFilePath = path.join(process.cwd(), 'moby.md');
 
-async function downloadFile(url, outputPath) {
-  const response = await fetch(url);
+// async function downloadFile(url, outputPath) {
+//   const response = await fetch(url);
 
-  if (!response.ok || !response.body) {
-    // consuming the response body is mandatory: https://undici.nodejs.org/#/?id=garbage-collection
-    await response.body?.cancel();
-    throw new Error(`Failed to fetch ${url}. Status: ${response.status}`);
-  }
+//   if (!response.ok || !response.body) {
+//     // consuming the response body is mandatory: https://undici.nodejs.org/#/?id=garbage-collection
+//     await response.body?.cancel();
+//     throw new Error(`Failed to fetch ${url}. Status: ${response.status}`);
+//   }
 
-  const fileStream = fs.createWriteStream(outputPath);
-  console.log(`Downloading file from ${url} to ${outputPath}`);
+//   const fileStream = fs.createWriteStream(outputPath);
+//   console.log(`Downloading file from ${url} to ${outputPath}`);
 
-  await pipeline(response.body, fileStream);
-  console.log('File downloaded successfully');
-}
+//   await pipeline(response.body, fileStream);
+//   console.log('File downloaded successfully');
+// }
 
-async function readLargeFile(filePath) {
-  const readStream = fs.createReadStream(filePath, { encoding: 'utf8' });
+// async function readLargeFile(filePath) {
+//   const readStream = fs.createReadStream(filePath, { encoding: 'utf8' });
 
-  try {
-    for await (const chunk of readStream) {
-      console.log('--- File chunk start ---');
-      console.log(chunk);
-      console.log('--- File chunk end ---');
-    }
-    console.log('Finished reading the file.');
-  } catch (error) {
-    console.error(`Error reading file: ${error.message}`);
-  }
-}
+//   try {
+//     for await (const chunk of readStream) {
+//       console.log('--- File chunk start ---');
+//       console.log(chunk);
+//       console.log('--- File chunk end ---');
+//     }
+//     console.log('Finished reading the file.');
+//   } catch (error) {
+//     console.error(`Error reading file: ${error.message}`);
+//   }
+// }
 
-try {
-  await downloadFile(fileUrl, outputFilePath);
-  await readLargeFile(outputFilePath);
-} catch (error) {
-  console.error(`Error: ${error.message}`);
-}
+// try {
+//   await downloadFile(fileUrl, outputFilePath);
+//   await readLargeFile(outputFilePath);
+// } catch (error) {
+//   console.error(`Error: ${error.message}`);
+// }
 
 // const ollamaPool = new Pool('http://localhost:11434', {
 //   connections: 10,
