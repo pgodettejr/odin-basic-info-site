@@ -2,69 +2,16 @@
 
 import { getFromStorage } from "./localStorage.js";
 // import './styles.css';
-import reverbFart from './sounds/quick-fart-with-reverb.mp3';
-import Plus from './img/plus.png';
-import Rock from './img/IT_DOESN_T_MATTER.mp4';
 
 // Getting Started with Node.js imports
 import { createServer } from 'node:http';
 // import { Writable } from 'node:stream';
 // import { Pool, stream } from 'undici';
-// import fs from 'node:fs';
-// import fs from 'node:fs/promises';
-// import { pipeline } from 'node:stream/promises';
-// import path from 'path';
+import fs from 'node:fs';
+import fs from 'node:fs/promises';
+import { pipeline } from 'node:stream/promises';
+import path from 'path';
 // import eventEmitter from 'node:events';
-
-// Secret easter egg. Click is enabled, but how can we also enable other interactions for accessibility like 'keydown', etc.?
-function poopSound() {
-  const poopLogo = document.querySelector(".app-logo");
-
-  poopLogo.addEventListener('click', function() {
-    // Create the audio element via JS
-    const audio = document.createElement("audio");
-    audio.setAttribute("data-image", "logo-sound");
-
-    // Wire the mp3 file up to the already existing img file
-    const imageButton = document.querySelector(".image-button");
-    audio.src = reverbFart;
-
-    // Text to show if the users' browser doesn't support the mp3 file
-    const audioError = document.createTextNode("Your browser does not support the HTML5 audio tag.");
-    audio.appendChild(audioError);
-
-    // Append the audio itself to the image file
-    imageButton.appendChild(audio);
-
-    if(!audio) return; // Stops function from running altogether
-    audio.currentTime = 1; // Rewinds file to just before the sound clip starts (1 second mark)
-    audio.play();
-  });
-};
-
-poopSound();
-
-// OPTION: Possibly go with audio clip instead of the GIF. Maybe combine the audio clip with an image of The Rock
-function itDoesNotMatter() {
-  const infoButton = document.querySelector(".get-info");
-
-  infoButton.addEventListener('click', function() {
-    const rockGIF = document.createElement("the-rock");
-    rockGIF.setAttribute("data-image", "rock-gif");
-
-    rockGIF.src = Rock;
-
-    // TODO: Append the mp4/GIF to the button itself
-    infoButton.appendChild(rockGIF);
-
-    // Do we need similar "play" code to the audio clip above? Or does the mp4/GIF play automatically when appended to the button?
-    if(!rockGif) return; // Stops function from running altogether
-    rockGIF.play();
-  });
-};
-
-itDoesNotMatter();
-
 
 // Getting Started with Node.js code examples from https://nodejs.org/en/docs/guides/getting-started-guide/
 
@@ -129,6 +76,12 @@ itDoesNotMatter();
 // }
 
 // fetchGitHubRepos().catch(console.error);
+
+// "Hello World" example of createServer
+// http.createServer(function (req, res) {
+//   res.writeHead(200, {'Content-Type': 'text/html'});
+//   res.end('Hello World!');
+// }).listen(8080);
 
 // Create the server that listens on port 8080
 const port = 8080;
@@ -285,23 +238,59 @@ getContact().catch(err => {
 //   console.error(err);
 // }
 
-// Reading file content using streams. More memory efficient and best used for big files as normal, sync and promise based methods will load the entire file into memory before processing it.
-// const fileUrl = 'https://www.gutenberg.org/files/2701/2701-0.txt';
-// const outputFilePath = path.join(process.cwd(), 'moby.md');
+// -------------------------------------------------------------
 
-// async function downloadFile(url, outputPath) {
-//   const response = await fetch(url);
+// BRANCH CODE
+
+// import reverbFart from './sounds/quick-fart-with-reverb.mp3';
+// import Plus from './img/plus.png';
+// import Rock from './img/IT_DOESN_T_MATTER.mp4';
+
+// Secret easter egg. Click is enabled, but how can we also enable other interactions for accessibility like 'keydown', etc.?
+// function poopSound() {
+//   const poopLogo = document.querySelector(".app-logo");
+
+//   poopLogo.addEventListener('click', function() {
+//     // Create the audio element via JS
+//     const audio = document.createElement("audio");
+//     audio.setAttribute("data-image", "logo-sound");
+
+//     // Wire the mp3 file up to the already existing img file
+//     const imageButton = document.querySelector(".image-button");
+//     audio.src = reverbFart;
+
+//     // Text to show if the users' browser doesn't support the mp3 file
+//     const audioError = document.createTextNode("Your browser does not support the HTML5 audio tag.");
+//     audio.appendChild(audioError);
+
+//     // Append the audio itself to the image file
+//     imageButton.appendChild(audio);
+
+//     if(!audio) return; // Stops function from running altogether
+//     audio.currentTime = 1; // Rewinds file to just before the sound clip starts (1 second mark)
+//     audio.play();
+//   });
+// };
+
+// poopSound();
+
+// Reading file content using streams. More memory efficient and best used for big files as normal, sync and promise based methods will load the entire file into memory before processing it.
+// const mp4File = './src/img/IT_DOESN_T_MATTER.mp4';
+// const outputFilePath = path.join(process.cwd(), 'rock.md');
+
+// async function downloadFile(mp4, outputPath) {
+//   const response = await fetch(mp4);
 
 //   if (!response.ok || !response.body) {
 //     // consuming the response body is mandatory: https://undici.nodejs.org/#/?id=garbage-collection
 //     await response.body?.cancel();
-//     throw new Error(`Failed to fetch ${url}. Status: ${response.status}`);
+//     throw new Error(`Failed to fetch ${mp4}. Status: ${response.status}`);
 //   }
 
-//   const fileStream = fs.createWriteStream(outputPath);
-//   console.log(`Downloading file from ${url} to ${outputPath}`);
+//   const mp4Stream = fs.createWriteStream(outputPath);
+//   console.log(`Downloading file from ${mp4} to ${outputPath}`);
 
-//   await pipeline(response.body, fileStream);
+//   await pipeline(response.body, mp4Stream);
 //   console.log('File downloaded successfully');
 // }
 
@@ -321,11 +310,32 @@ getContact().catch(err => {
 // }
 
 // try {
-//   await downloadFile(fileUrl, outputFilePath);
+//   await downloadFile(mp4File, outputFilePath);
 //   await readLargeFile(outputFilePath);
 // } catch (error) {
 //   console.error(`Error: ${error.message}`);
 // }
+
+// // OPTION: Possibly go with audio clip instead of the GIF. Maybe combine the audio clip with an image of The Rock
+// function itDoesNotMatter() {
+//   const infoButton = document.querySelector(".get-info");
+
+//   infoButton.addEventListener('click', function() {
+//     const rockGIF = document.createElement("the-rock");
+//     rockGIF.setAttribute("data-image", "rock-gif");
+
+//     rockGIF.src = Rock;
+
+//     // TODO: Append the mp4/GIF to the button itself
+//     infoButton.appendChild(rockGIF);
+
+//     // Do we need similar "play" code to the audio clip above? Or does the mp4/GIF play automatically when appended to the button?
+//     if(!rockGif) return; // Stops function from running altogether
+//     rockGIF.play();
+//   });
+// };
+
+// itDoesNotMatter();
 
 // const ollamaPool = new Pool('http://localhost:11434', {
 //   connections: 10,
